@@ -6,10 +6,53 @@ namespace BasicConsoleGame {
         static void Main(string[] args) {
             Random random = new Random();
             Level level = new Level(random.Next());
-            
+
+            RenderScreen(level);
+
+            do {
+                ConsoleKey key = Console.KeyAvailable ? Console.ReadKey().Key : ConsoleKey.NoName;
+
+                if (key == ConsoleKey.Escape) {
+                    goto finale;
+                } else if (readCountdown == 0) {
+                    readCountdown = 2;
+
+                    switch (key) {
+                        case ConsoleKey.W:
+                            yOffset -= 1;
+                            RenderScreen(level);
+                            break;
+                        case ConsoleKey.A:
+                            xOffset -= 1;
+                            RenderScreen(level);
+                            break;
+                        case ConsoleKey.D:
+                            xOffset += 1;
+                            RenderScreen(level);
+                            break;
+                        case ConsoleKey.S:
+                            yOffset += 1;
+                            RenderScreen(level);
+                            break;
+                        default:
+                            break;
+                    }
+                } else {
+                    Console.SetCursorPosition(18 * 2 + 1, 18);
+                    readCountdown--;
+                }
+            } while (true);
+
+        finale:
+            return;
+        }
+
+        private static void RenderScreen(Level level) {
             for (int x = 0; x < 19; ++x) {
+                int tileX = x + xOffset;
+
                 for (int y = 0; y < 19; ++y) {
-                    RenderTile(x, y, level.GetTile(x, y));
+                    RenderTile(x, y, level.GetTile(tileX, y + yOffset));
                 }
             }
         }
@@ -37,6 +80,10 @@ namespace BasicConsoleGame {
 
             Draw(x, y, c);
         }
+
+        private static int xOffset = 0;
+        private static int yOffset = 0;
+        private static int readCountdown = 2;
 
         private static void SetColor(ConsoleColor colour) {
             if (colour != colourCache) {
