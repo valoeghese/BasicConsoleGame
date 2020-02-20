@@ -25,6 +25,17 @@ namespace BasicConsoleGame.Player {
 
         public void SetLevel(Level level) {
             this.level = level;
+            this.camera.SetLevel(level);
+        }
+
+        public void Teleport(Level level, int x, int y) {
+            SetLevel(level);
+            Teleport(x, y);
+        }
+
+        public void Teleport(int x, int y) {
+            this.x = x;
+            this.y = y;
         }
 
         public int GetX() {

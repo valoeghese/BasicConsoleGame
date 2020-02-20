@@ -29,6 +29,10 @@ namespace BasicConsoleGame.Render {
             }
         }
 
+        public void SetLevel(Level level) {
+            this.level = level;
+        }
+
         public void SetCurrent() {
             currentCamera.current = false;
             currentCamera = this;
@@ -72,7 +76,7 @@ namespace BasicConsoleGame.Render {
             }
         }
 
-        private readonly Level level;
+        private Level level;
         private int x;
         private int y;
         private bool current;
