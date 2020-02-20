@@ -2,13 +2,14 @@
 using BasicConsoleGame.Render;
 using BasicConsoleGame.Util;
 using BasicConsoleGame.World;
+using BasicConsoleGame.World.Gen;
 using System;
 
 namespace BasicConsoleGame {
     class Program {
         static void Main(string[] args) {
             Random random = new Random();
-            level = new Level(random.Next());
+            level = new Level(random.Next(), OverworldLevelGenerator.Create);
             MainPlayer player = new MainPlayer(level);
 
             debugMenu = DebugMenuPart.create(new Func<string>[] {
