@@ -1,6 +1,5 @@
 ﻿using BasicConsoleGame.Player;
-using BasicConsoleGame.Render;
-using BasicConsoleGame.Util;
+using BasicConsoleGame.Render.Screen;
 using BasicConsoleGame.World;
 using BasicConsoleGame.World.Gen;
 using System;
@@ -11,12 +10,8 @@ namespace BasicConsoleGame {
             Random random = new Random();
             level = new Level(random.Next(), OverworldLevelGenerator.Create);
             MainPlayer player = new MainPlayer(level);
-
-            debugMenu = DebugMenuPart.create(new Func<string>[] {
-                () => "XY:         " + player.GetX().ToString() + ", " + player.GetY().ToString(),
-                () => "Section XY: " + (player.GetX() >> 4).ToString() + "," + (player.GetY() >> 4).ToString(),
-                () => "Seed:       " + level.seed
-            });
+            levelScreen = new LevelScreen(player);
+            screen = levelScreen;
 
             Render();
 
@@ -47,22 +42,14 @@ namespace BasicConsoleGame {
                                 Render();
                                 break;
                             case ConsoleKey.Tab:
-                                if (!tabDownPrev) {
-                                    displayDebugInfo = !displayDebugInfo;
-
-                                    if (!displayDebugInfo) {
-                                        RemoveDebugInfo();
-                                    }
-                                    Render();
-                                    tabDownPrev = true;
-                                }
+                                levelScreen.FlipDebugInfoDisplay();
+                                Render();
+                                break;
+                            case ConsoleKey.I:
                                 break;
                             default:
                                 break;
                         }
-                    }
-                    if (key != ConsoleKey.Tab) {
-                        tabDownPrev = false;
                     }
                 } else {
                     PrepareCursorForInput();
@@ -75,43 +62,16 @@ namespace BasicConsoleGame {
         }
 
         private static void Render() {
-            Camera camera = Camera.GetCurrent();
-            camera.RenderLevel();
-
-            if (displayDebugInfo) {
-                RenderDebug(camera);
-            }
+            screen.Render();
         }
 
-        private static void RenderDebug(Camera camera) {
-            int baseY = 21;
-            camera.SetColour(ConsoleColor.White);
-
-            for (int i = 0; i < debugMenu.Length; ++i) {
-                camera.TextLine(0, baseY + i, debugMenu[i].GetText());
-            }
-
-            PrepareCursorForInput();
-        }
-
-        private static void RemoveDebugInfo() {
-            int baseY = 21;
-            
-            for (int i = 0; i < debugMenu.Length; ++i) {
-                Console.SetCursorPosition(0, baseY + i);
-                Console.Write("                                        "); // 40 spaces
-            }
-        }
-
-        private static int readCountdown = 2;
-        private static DebugMenuPart []debugMenu; // god tier array declaration placement
-        private static bool displayDebugInfo = false;
-        private static bool tabDownPrev = false;
-
-        private static void PrepareCursorForInput() {
+        internal static void PrepareCursorForInput() {
             Console.SetCursorPosition(19 * 2 + 1, 19);
         }
 
+        private static int readCountdown = 2;
         private static Level level;
+        private static LevelScreen levelScreen;
+        internal static IScreen screen;
     }
 }

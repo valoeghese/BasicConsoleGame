@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace BasicConsoleGame.Player.Item {
-    class BoatItem : Item { // doesn't need to be public since it's only refrenced in Item
+    class BoatItem : ItemType { // doesn't need to be public since it's only refrenced in Item
         public BoatItem(byte id) : base(id, 1) {
         }
 

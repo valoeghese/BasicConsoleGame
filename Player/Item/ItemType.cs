@@ -1,8 +1,8 @@
 ﻿namespace BasicConsoleGame.Player.Item {
-    public class Item {
-        public Item(byte id, byte maxStackSize) {
+    public class ItemType {
+        public ItemType(byte id, byte maxCount) {
             this.id = id;
-            this.maxStackSize = maxStackSize;
+            this.maxCount = maxCount;
         }
 
         public virtual bool Use(ItemEntry entry, MainPlayer player, int x, int y) {
@@ -10,8 +10,8 @@
         }
 
         public readonly byte id;
-        public readonly byte maxStackSize;
+        public readonly byte maxCount;
 
-        public static readonly Item Boat = new BoatItem(0);
+        public static readonly ItemType Boat = new BoatItem(0);
     }
 }

@@ -1,12 +1,9 @@
 ﻿using BasicConsoleGame.Render;
 using BasicConsoleGame.Util;
 using BasicConsoleGame.World;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BasicConsoleGame.Player {
-    public class MainPlayer {
+    public class MainPlayer : ILevelSource {
         public MainPlayer(Level level) {
             Vec2 spawnPos = level.GetPlayerSpawn();
             this.level = level;
