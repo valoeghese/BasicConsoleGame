@@ -28,6 +28,10 @@ namespace BasicConsoleGame.Player {
             this.camera.SetLevel(level);
         }
 
+        public Level GetLevel() {
+            return this.level;
+        }
+
         public void Teleport(Level level, int x, int y) {
             SetLevel(level);
             Teleport(x, y);
@@ -47,6 +51,7 @@ namespace BasicConsoleGame.Player {
         }
 
         private Level level;
+
         private readonly Camera camera;
         private int x;
         private int y;
