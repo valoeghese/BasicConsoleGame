@@ -1,11 +1,54 @@
-﻿using BasicConsoleGame.level.gen;
+﻿using BasicConsoleGame.Util;
+using BasicConsoleGame.World.Gen;
+using System;
 using System.Collections.Generic;
 
-namespace BasicConsoleGame.level {
-    class Level : ITileArea {
+namespace BasicConsoleGame.World {
+    public class Level : ITileArea {
         public Level(long seed) {
             this.generator = new LevelGenerator(seed);
             this.generator.AddTerrainModifier(new RockTerrainModifier());
+            this.seed = seed;
+        }
+
+        internal Vec2 GetPlayerSpawn() {
+            // loop over section x, section y
+            for (int sx = 0; sx < 5; ++sx) {
+                for (int sy = 0; sy < 5; ++sy) {
+                    IList<LevelSection> sections = new List<LevelSection> {
+                        this.generator.Create(sx, sy)
+                    };
+
+                    // inverse sections
+                    bool sxInverse = sx != 0;
+                    bool syInverse = sy != 0;
+
+                    if (sxInverse) {
+                        sections.Add(this.generator.Create(-sx, sy));
+
+                        if (syInverse) {
+                            sections.Add(this.generator.Create(-sx, -sy));
+                        }
+                    } else if (syInverse) {
+                        sections.Add(this.generator.Create(sx, -sy));
+                    }
+
+                    // loop over sections and inverse sections
+                    foreach (LevelSection section in sections) {
+                        // loop over local x, local y
+                        for (int lx = 0; lx < 16; ++lx) {
+                            for (int ly = 0; ly < 16; ++ly) {
+                                // check if this is valid player spawn
+                                if (TileUtils.CanPlayerWalkOn(section.GetTile(lx, ly))) {
+                                    return new Vec2((sx << 4) + lx, (sy << 4) + ly);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return new Vec2(0, 0);
         }
 
         public Tile GetTile(int x, int y) {
@@ -46,5 +89,6 @@ namespace BasicConsoleGame.level {
         private readonly IList<long> sCoordCache = new List<long>(); // section coordinate cache
         private readonly Dictionary<long, LevelSection> sections = new Dictionary<long, LevelSection>();
         private readonly LevelGenerator generator;
+        public readonly long seed;
     }
 }

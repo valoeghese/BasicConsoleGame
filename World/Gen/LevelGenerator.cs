@@ -1,7 +1,7 @@
-﻿using BasicConsoleGame.util;
+﻿using BasicConsoleGame.Util;
 using System.Collections.Generic;
 
-namespace BasicConsoleGame.level.gen {
+namespace BasicConsoleGame.World.Gen {
     public class LevelGenerator {
         public LevelGenerator(long seed) {
             this.seed = seed;
@@ -10,7 +10,7 @@ namespace BasicConsoleGame.level.gen {
             this.beachSampler = new ValueNoise(seed + 12);
         }
 
-        public LevelGenerator AddTerrainModifier(ITerrainModifier modifier) {
+        public LevelGenerator AddTerrainModifier(TerrainModifier modifier) {
             modifier.Initialise(this.seed);
             this.terrainModifiers.Add(modifier);
             return this;
@@ -34,7 +34,7 @@ namespace BasicConsoleGame.level.gen {
                     if (noise > 0.0D) { // add beaches and land from noise
                         double beachNoise = beachSampler.Sample(noiseX, noiseY) / 6.0D;
                         double rockBeachNoise = noiseSampler.Sample(noiseX + 2, noiseY + 2) / 7.0D;
-                        toSet = noise < (0.0D + rockBeachNoise) ? Tile.ROCK : Tile.GRASS;
+                        toSet = noise < (0.0D + rockBeachNoise) ? Tile.STONE : Tile.GRASS;
                         toSet = noise < (0.0D + beachNoise) ? Tile.SAND : toSet;
                     }
                     section.SetTile(localX, localY, toSet);
@@ -42,8 +42,8 @@ namespace BasicConsoleGame.level.gen {
             }
 
             // modify terrain with terrain modifiers
-            foreach (ITerrainModifier modifier in terrainModifiers) {
-                modifier.ModifyTerrain(sectionX, sectionY, section);
+            foreach (TerrainModifier modifier in terrainModifiers) {
+                modifier.Start(sectionX, sectionY, section);
             }
 
             return section;
@@ -51,7 +51,7 @@ namespace BasicConsoleGame.level.gen {
 
         public readonly long seed;
         private readonly ValueNoise noiseSampler, beachSampler;
-        private readonly IList<ITerrainModifier> terrainModifiers = new List<ITerrainModifier>();
+        private readonly IList<TerrainModifier> terrainModifiers = new List<TerrainModifier>();
 
         private const double NoiseScale = 17.0D;
     }

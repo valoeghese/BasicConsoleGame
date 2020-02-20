@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BasicConsoleGame.util {
+namespace BasicConsoleGame.Util {
 	// Ported from my Java version of this
 	public class ValueNoise {
 		public ValueNoise(long seed) {

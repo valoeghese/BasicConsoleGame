@@ -1,4 +1,4 @@
-﻿namespace BasicConsoleGame.level {
+﻿namespace BasicConsoleGame.World {
     public class LevelSection : ITileArea {
         public LevelSection(int x, int y) {
             this.sectionX = x;

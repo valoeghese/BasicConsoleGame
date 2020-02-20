@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BasicConsoleGame.util {
+namespace BasicConsoleGame.Util {
     public class SimpleRandom {
 		private readonly long seed;
 		private long localSeed;

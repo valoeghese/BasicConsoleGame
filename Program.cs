@@ -1,13 +1,23 @@
-﻿using BasicConsoleGame.level;
+﻿using BasicConsoleGame.Player;
+using BasicConsoleGame.Render;
+using BasicConsoleGame.Util;
+using BasicConsoleGame.World;
 using System;
 
 namespace BasicConsoleGame {
     class Program {
         static void Main(string[] args) {
             Random random = new Random();
-            Level level = new Level(random.Next());
+            level = new Level(random.Next());
+            MainPlayer player = new MainPlayer(level);
 
-            RenderScreen(level);
+            debugMenu = DebugMenuPart.create(new Func<string>[] {
+                () => "XY:         " + player.GetX().ToString() + ", " + player.GetY().ToString(),
+                () => "Section XY: " + (player.GetX() >> 4).ToString() + "," + (player.GetY() >> 4).ToString(),
+                () => "Seed:       " + level.seed
+            });
+
+            Render();
 
             do {
                 ConsoleKey key = Console.KeyAvailable ? Console.ReadKey().Key : ConsoleKey.NoName;
@@ -15,30 +25,46 @@ namespace BasicConsoleGame {
                 if (key == ConsoleKey.Escape) {
                     goto finale;
                 } else if (readCountdown == 0) {
-                    readCountdown = 2;
+                    if (key != ConsoleKey.NoName) {
+                        readCountdown = 2;
 
-                    switch (key) {
-                        case ConsoleKey.W:
-                            yOffset -= 1;
-                            RenderScreen(level);
-                            break;
-                        case ConsoleKey.A:
-                            xOffset -= 1;
-                            RenderScreen(level);
-                            break;
-                        case ConsoleKey.D:
-                            xOffset += 1;
-                            RenderScreen(level);
-                            break;
-                        case ConsoleKey.S:
-                            yOffset += 1;
-                            RenderScreen(level);
-                            break;
-                        default:
-                            break;
+                        switch (key) {
+                            case ConsoleKey.W:
+                                player.Move(0, -1);
+                                Render();
+                                break;
+                            case ConsoleKey.A:
+                                player.Move(-1, 0);
+                                Render();
+                                break;
+                            case ConsoleKey.D:
+                                player.Move(1, 0);
+                                Render();
+                                break;
+                            case ConsoleKey.S:
+                                player.Move(0, 1);
+                                Render();
+                                break;
+                            case ConsoleKey.Tab:
+                                if (!tabDownPrev) {
+                                    displayDebugInfo = !displayDebugInfo;
+
+                                    if (!displayDebugInfo) {
+                                        RemoveDebugInfo();
+                                    }
+                                    Render();
+                                    tabDownPrev = true;
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    if (key != ConsoleKey.Tab) {
+                        tabDownPrev = false;
                     }
                 } else {
-                    Console.SetCursorPosition(18 * 2 + 1, 18);
+                    PrepareCursorForInput();
                     readCountdown--;
                 }
             } while (true);
@@ -47,56 +73,44 @@ namespace BasicConsoleGame {
             return;
         }
 
-        private static void RenderScreen(Level level) {
-            for (int x = 0; x < 19; ++x) {
-                int tileX = x + xOffset;
+        private static void Render() {
+            Camera camera = Camera.GetCurrent();
+            camera.RenderLevel();
 
-                for (int y = 0; y < 19; ++y) {
-                    RenderTile(x, y, level.GetTile(tileX, y + yOffset));
-                }
+            if (displayDebugInfo) {
+                RenderDebug(camera);
             }
         }
 
-        private static void RenderTile(int x, int y, Tile tile) {
-            char c = '?'; // character to render
-            switch (tile) {
-                case Tile.WATER:
-                    c = '≈';
-                    SetColor(ConsoleColor.Blue);
-                    break;
-                case Tile.GRASS:
-                    c = '#';
-                    SetColor(ConsoleColor.Green);
-                    break;
-                case Tile.ROCK:
-                    c = '0';
-                    SetColor(ConsoleColor.Gray);
-                    break;
-                case Tile.SAND:
-                    c = '#';
-                    SetColor(ConsoleColor.Yellow);
-                    break;
+        private static void RenderDebug(Camera camera) {
+            int baseY = 21;
+            camera.SetColour(ConsoleColor.White);
+
+            for (int i = 0; i < debugMenu.Length; ++i) {
+                camera.TextLine(0, baseY + i, debugMenu[i].GetText());
             }
 
-            Draw(x, y, c);
+            PrepareCursorForInput();
         }
 
-        private static int xOffset = 0;
-        private static int yOffset = 0;
+        private static void RemoveDebugInfo() {
+            int baseY = 21;
+            
+            for (int i = 0; i < debugMenu.Length; ++i) {
+                Console.SetCursorPosition(0, baseY + i);
+                Console.Write("                                        "); // 40 spaces
+            }
+        }
+
         private static int readCountdown = 2;
+        private static DebugMenuPart []debugMenu; // god tier array declaration placement
+        private static bool displayDebugInfo = false;
+        private static bool tabDownPrev = false;
 
-        private static void SetColor(ConsoleColor colour) {
-            if (colour != colourCache) {
-                colourCache = colour;
-                Console.ForegroundColor = colourCache;
-            }
+        private static void PrepareCursorForInput() {
+            Console.SetCursorPosition(19 * 2 + 1, 19);
         }
 
-        private static void Draw(int x, int y, char chr) {
-            Console.SetCursorPosition(x * 2, y);
-            Console.Write(chr);
-        }
-
-        private static ConsoleColor colourCache;
+        private static Level level;
     }
 }
