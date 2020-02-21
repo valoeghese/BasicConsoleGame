@@ -11,8 +11,11 @@ namespace BasicConsoleGame.World.Gen {
             this.beachSampler = new ValueNoise(seed + 12);
         }
 
-        public static OverworldLevelGenerator Create(long seed) {
-            return new OverworldLevelGenerator(seed);
+        public static LevelGenerator Create(long seed) {
+            LevelGenerator result = new OverworldLevelGenerator(seed);
+            result.AddTerrainModifier(new RockTerrainModifier());
+            result.AddTerrainModifier(new BushTerrainModifier());
+            return result;
         }
 
         protected override void GenerateBase(LevelSection section, int x, int y) {

@@ -1,11 +1,38 @@
 ﻿using BasicConsoleGame.Player.Item;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BasicConsoleGame.Player {
     public class Inventory {
+        public Inventory(int slots) {
+            this.slotCount = slots;
+            this.slots = new ItemEntry[slots];
+            
+            for (int i = 0; i < slots; ++i) {
+                this.slots[i] = ItemEntry.Empty;
+            }
+        }
+
+        public int Slots() {
+            return this.slotCount;
+        }
+
+        public void SetItemInSlot(int slot, ItemEntry entry) {
+            this.slots[slot] = entry;
+        }
         
+        public int GetNextAvailableSlot() {
+            for (int i = 0; i < slotCount; ++i) {
+                if (slots[i].IsEmpty()) {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+
+        public ItemEntry this[int slot] => slots[slot];
+
+        private readonly int slotCount;
+        private readonly ItemEntry[] slots;
     }
 
     public sealed class ItemEntry {
@@ -44,5 +71,7 @@ namespace BasicConsoleGame.Player {
 
         private int count;
         private readonly ItemType item;
+
+        public static readonly ItemEntry Empty = new ItemEntry(null, 0);
     }
 }

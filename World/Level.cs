@@ -7,7 +7,6 @@ namespace BasicConsoleGame.World {
     public class Level : ITileArea {
         public Level(long seed, Func<long, LevelGenerator> genCreator) {
             this.generator = genCreator.Invoke(seed);
-            this.generator.AddTerrainModifier(new RockTerrainModifier());
             this.seed = seed;
         }
 

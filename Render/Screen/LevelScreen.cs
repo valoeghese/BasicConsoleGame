@@ -51,6 +51,15 @@ namespace BasicConsoleGame.Render.Screen {
             }
         }
 
+        public void ClearScreen() {
+            Console.SetCursorPosition(0, 0);
+            for (int y = 0; y < 20; ++y) {
+                Console.WriteLine("                                        "); // 40 spaces
+            }
+            
+            RemoveDebugInfo();
+        }
+
         private DebugMenuPart []debugMenu; // god tier array declaration placement
         public bool displayDebugInfo = false;
     }

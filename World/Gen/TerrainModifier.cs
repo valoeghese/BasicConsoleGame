@@ -8,7 +8,7 @@ namespace BasicConsoleGame.World.Gen {
         protected TerrainModifier(long salt) {
             this.salt = salt;
         }
-        public void Initialise(long seed) {
+        public virtual void Initialise(long seed) {
             this.random = new SimpleRandom(seed + salt);
         }
         public void Start(int sectionX, int sectionY, LevelSection section) {

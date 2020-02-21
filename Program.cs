@@ -11,6 +11,7 @@ namespace BasicConsoleGame {
             level = new Level(random.Next(), OverworldLevelGenerator.Create);
             MainPlayer player = new MainPlayer(level);
             levelScreen = new LevelScreen(player);
+            inventoryScreen = new InventoryScreen(player.inventory);
             screen = levelScreen;
 
             Render();
@@ -26,19 +27,27 @@ namespace BasicConsoleGame {
 
                         switch (key) {
                             case ConsoleKey.W:
-                                player.Move(0, -1);
+                                if (screen is LevelScreen) {
+                                    player.Move(0, -1);
+                                }
                                 Render();
                                 break;
                             case ConsoleKey.A:
-                                player.Move(-1, 0);
+                                if (screen is LevelScreen) {
+                                    player.Move(-1, 0);
+                                }
                                 Render();
                                 break;
                             case ConsoleKey.D:
-                                player.Move(1, 0);
+                                if (screen is LevelScreen) {
+                                    player.Move(1, 0);
+                                }
                                 Render();
                                 break;
                             case ConsoleKey.S:
-                                player.Move(0, 1);
+                                if (screen is LevelScreen) {
+                                    player.Move(0, 1);
+                                }
                                 Render();
                                 break;
                             case ConsoleKey.Tab:
@@ -46,6 +55,16 @@ namespace BasicConsoleGame {
                                 Render();
                                 break;
                             case ConsoleKey.I:
+                                if (screen is LevelScreen) {
+                                    SwitchScreen(inventoryScreen);
+                                } else if (screen is InventoryScreen) {
+                                    SwitchScreen(levelScreen);
+                                }
+                                break;
+                            case ConsoleKey.E:
+                                if (screen is LevelScreen) {
+                                    
+                                }
                                 break;
                             default:
                                 break;
@@ -69,9 +88,16 @@ namespace BasicConsoleGame {
             Console.SetCursorPosition(19 * 2 + 1, 19);
         }
 
+        private static void SwitchScreen(IScreen newScreen) {
+            screen.ClearScreen();
+            screen = newScreen;
+            screen.Render();
+        }
+
         private static int readCountdown = 2;
         private static Level level;
         private static LevelScreen levelScreen;
+        private static InventoryScreen inventoryScreen;
         internal static IScreen screen;
     }
 }

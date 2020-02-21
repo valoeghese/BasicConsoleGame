@@ -1,4 +1,6 @@
-﻿using BasicConsoleGame.Render;
+﻿using BasicConsoleGame.Player;
+using BasicConsoleGame.Player.Item;
+using BasicConsoleGame.Render;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -51,12 +53,21 @@ namespace BasicConsoleGame.World {
                         break;
                     case Tile.SHRUB:
                         c = '@';
-                        camera.SetColour(ConsoleColor.DarkGreen);
+                        camera.SetColour(ConsoleColor.DarkYellow);
                         break;
                 }
             }
 
             camera.Draw(x, y, c);
+        }
+
+        public static ItemEntry GetHarvestItem(Tile tile) {
+            switch (tile) {
+                case Tile.SHRUB:
+                    return new ItemEntry(ItemType.Boat, 1);
+                default:
+                    return null;
+            }
         }
     }
 }
