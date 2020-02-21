@@ -20,7 +20,7 @@ namespace BasicConsoleGame.Render.Screen {
                 
                 if (!entry.IsEmpty()) {
                     Console.SetCursorPosition(0, y);
-                    Console.Write(entry.GetItem());
+                    Console.Write(entry.GetItem().name);
                     Console.SetCursorPosition(35, y);
                     Console.Write(entry.GetCount());
                 }
