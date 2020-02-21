@@ -38,7 +38,7 @@ namespace BasicConsoleGame.World {
                         for (int lx = 0; lx < 16; ++lx) {
                             for (int ly = 0; ly < 16; ++ly) {
                                 // check if this is valid player spawn
-                                if (TileUtils.CanPlayerWalkOn(section.GetTile(lx, ly))) {
+                                if (TileUtils.CanPlayerWalkOn(false, section.GetTile(lx, ly))) {
                                     return new Vec2((sx << 4) + lx, (sy << 4) + ly);
                                 }
                             }

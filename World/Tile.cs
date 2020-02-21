@@ -20,8 +20,8 @@ namespace BasicConsoleGame.World {
             return (byte) tile > 32;
         }
 
-        public static bool CanPlayerWalkOn(Tile tile) {
-            return !IsSolid(tile) && (tile != Tile.WATER);
+        public static bool CanPlayerWalkOn(bool inBoat, Tile tile) {
+            return !IsSolid(tile) && (inBoat || (tile != Tile.WATER));
         }
         public static void RenderTile(int x, int y, Tile tile, Camera camera) {
             char c = '?'; // character to render

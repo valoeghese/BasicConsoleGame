@@ -9,7 +9,7 @@ namespace BasicConsoleGame {
         static void Main(string[] args) {
             Random random = new Random();
             level = new Level(random.Next(), OverworldLevelGenerator.Create);
-            MainPlayer player = new MainPlayer(level);
+            player = new MainPlayer(level);
             levelScreen = new LevelScreen(player);
             inventoryScreen = new InventoryScreen(player.inventory);
             screen = levelScreen;
@@ -99,6 +99,7 @@ namespace BasicConsoleGame {
         private static Level level;
         private static LevelScreen levelScreen;
         private static InventoryScreen inventoryScreen;
+        internal static MainPlayer player;
         internal static IScreen screen;
     }
 }

@@ -1,4 +1,5 @@
-﻿using BasicConsoleGame.Render;
+﻿using BasicConsoleGame.Player.Item;
+using BasicConsoleGame.Render;
 using BasicConsoleGame.Util;
 using BasicConsoleGame.World;
 
@@ -14,7 +15,7 @@ namespace BasicConsoleGame.Player {
         }
 
         public void Move(int x, int y) {
-            if (TileUtils.CanPlayerWalkOn(this.level.GetTile(this.x + x, this.y + y))) {
+            if (TileUtils.CanPlayerWalkOn(this.InBoat(), this.level.GetTile(this.x + x, this.y + y))) {
                 this.x += x;
                 this.y += y;
                 this.camera.ReLocate(this.x, this.y);
@@ -112,6 +113,10 @@ namespace BasicConsoleGame.Player {
 
         public Facing GetFacing() {
             return this.facing;
+        }
+
+        public bool InBoat() {
+            return this.inventory[0].GetItem() == ItemType.Boat;
         }
 
         private Level level;
