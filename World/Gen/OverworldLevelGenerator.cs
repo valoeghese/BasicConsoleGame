@@ -1,7 +1,4 @@
 ﻿using BasicConsoleGame.Util;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BasicConsoleGame.World.Gen {
     public class OverworldLevelGenerator : LevelGenerator {
@@ -35,7 +32,10 @@ namespace BasicConsoleGame.World.Gen {
                         double rockBeachNoise = noiseSampler.Sample(noiseX + 2, noiseY + 2) / 7.0D;
                         toSet = noise < (0.0D + rockBeachNoise) ? Tile.STONE : Tile.GRASS;
                         toSet = noise < (0.0D + beachNoise) ? Tile.SAND : toSet;
+                    } else if (noise > -0.12D) {
+                        toSet = Tile.SHALLOW_WATER;
                     }
+
                     section.SetTile(localX, localY, toSet);
                 }
             }

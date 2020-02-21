@@ -7,7 +7,7 @@ using System;
 namespace BasicConsoleGame {
     class Program {
         static void Main(string[] args) {
-            Random random = new Random();
+            random = new Random();
             level = new Level(random.Next(), OverworldLevelGenerator.Create);
             player = new MainPlayer(level);
             levelScreen = new LevelScreen(player);
@@ -23,8 +23,6 @@ namespace BasicConsoleGame {
                     goto finale;
                 } else if (readCountdown == 0) {
                     if (key != ConsoleKey.NoName) {
-                        readCountdown = 2;
-
                         switch (key) {
                             case ConsoleKey.W:
                                 if (screen is LevelScreen) {
@@ -71,6 +69,8 @@ namespace BasicConsoleGame {
                                 break;
                         }
                     }
+
+                    readCountdown = player.blockSlowness;
                 } else {
                     PrepareCursorForInput();
                     readCountdown--;
@@ -101,5 +101,6 @@ namespace BasicConsoleGame {
         private static InventoryScreen inventoryScreen;
         internal static MainPlayer player;
         internal static IScreen screen;
+        internal static Random random;
     }
 }

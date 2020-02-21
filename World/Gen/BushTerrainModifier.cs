@@ -15,7 +15,7 @@ namespace BasicConsoleGame.World.Gen {
             double noise1 = 0.75 + this.treeDensityNoise1.Sample(sectionX / noiseScale1, sectionY / noiseScale1);
             double noise2 = 0.75 + this.treeDensityNoise2.Sample(sectionY / noiseScale2, sectionY / noiseScale2);
 
-            int shrubCount = (int)(((noise1 * 0.75) + (noise2 * 0.25)) * 4.0);
+            int shrubCount = (int)(((noise1 * 0.75) + (noise2 * 0.25)) * 6.0);
 
             if (shrubCount > 0) {
                 for (int i = 0; i < shrubCount * 2; ++i) {

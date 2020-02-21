@@ -11,6 +11,7 @@ namespace BasicConsoleGame.World {
         GRASS = 1,
         STONE = 2,
         SAND = 3,
+        SHALLOW_WATER = 4,
         ROCK = 33,
         SHRUB = 34
     }
@@ -33,7 +34,7 @@ namespace BasicConsoleGame.World {
                 switch (tile) {
                     case Tile.WATER:
                         c = '≈';
-                        camera.SetColour(ConsoleColor.Blue);
+                        camera.SetColour(ConsoleColor.DarkBlue);
                         break;
                     case Tile.GRASS:
                         c = '#';
@@ -46,6 +47,10 @@ namespace BasicConsoleGame.World {
                     case Tile.SAND:
                         c = '#';
                         camera.SetColour(ConsoleColor.Yellow);
+                        break;
+                    case Tile.SHALLOW_WATER:
+                        c = '≈';
+                        camera.SetColour(ConsoleColor.Cyan);
                         break;
                     case Tile.ROCK:
                         c = '0';

@@ -15,10 +15,14 @@ namespace BasicConsoleGame.Player {
         }
 
         public void Move(int x, int y) {
-            if (TileUtils.CanPlayerWalkOn(this.InBoat(), this.level.GetTile(this.x + x, this.y + y))) {
+            Tile tile = this.level.GetTile(this.x + x, this.y + y);
+
+            if (TileUtils.CanPlayerWalkOn(this.InBoat(), tile)) {
                 this.x += x;
                 this.y += y;
                 this.camera.ReLocate(this.x, this.y);
+
+                this.blockSlowness = tile == Tile.SHALLOW_WATER ? 3 : 2;
             }
 
             if (x == 0) {
@@ -126,5 +130,6 @@ namespace BasicConsoleGame.Player {
         private int x;
         private int y;
         private Facing facing;
+        internal int blockSlowness = 2;
     }
 }
