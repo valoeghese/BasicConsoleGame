@@ -18,7 +18,7 @@ namespace BasicConsoleGame.World.Gen {
             int shrubCount = (int)(((noise1 * 0.75) + (noise2 * 0.25)) * 4.0);
 
             if (shrubCount > 0) {
-                for (int i = 0; i < shrubCount; ++i) {
+                for (int i = 0; i < shrubCount * 2; ++i) {
                     int x = this.random.Random(16);
                     int y = this.random.Random(16);
                     
