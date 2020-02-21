@@ -63,7 +63,7 @@ namespace BasicConsoleGame {
                                 break;
                             case ConsoleKey.E:
                                 if (screen is LevelScreen) {
-                                    
+                                    player.Harvest();
                                 }
                                 break;
                             default:
