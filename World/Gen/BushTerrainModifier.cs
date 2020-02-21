@@ -29,8 +29,8 @@ namespace BasicConsoleGame.World.Gen {
             }
         }
 
-        private const double noiseScale1 = 32.0D;
-        private const double noiseScale2 = 8.0D;
+        private const double noiseScale1 = 16.0D;
+        private const double noiseScale2 = 4.0D;
 
         private ValueNoise treeDensityNoise1;
         private ValueNoise treeDensityNoise2;
