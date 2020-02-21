@@ -22,7 +22,7 @@ namespace BasicConsoleGame.Player {
                 this.y += y;
                 this.camera.ReLocate(this.x, this.y);
 
-                this.blockSlowness = tile == Tile.SHALLOW_WATER ? 3 : 2;
+                this.blockSlowness = tile == Tile.SHALLOW_WATER ? 2 : 1;
             }
 
             if (x == 0) {
@@ -130,6 +130,6 @@ namespace BasicConsoleGame.Player {
         private int x;
         private int y;
         private Facing facing;
-        internal int blockSlowness = 2;
+        internal int blockSlowness = 1;
     }
 }

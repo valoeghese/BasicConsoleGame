@@ -7,7 +7,7 @@ using System;
 namespace BasicConsoleGame {
     class Program {
         static void Main(string[] args) {
-            random = new Random();
+            Random random = new Random();
             level = new Level(random.Next(), OverworldLevelGenerator.Create);
             player = new MainPlayer(level);
             levelScreen = new LevelScreen(player);
@@ -95,12 +95,11 @@ namespace BasicConsoleGame {
             screen.Render();
         }
 
-        private static int readCountdown = 2;
+        private static int readCountdown = 1;
         private static Level level;
         private static LevelScreen levelScreen;
         private static InventoryScreen inventoryScreen;
         internal static MainPlayer player;
         internal static IScreen screen;
-        internal static Random random;
     }
 }
