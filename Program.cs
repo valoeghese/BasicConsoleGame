@@ -64,6 +64,7 @@ namespace BasicConsoleGame {
                             case ConsoleKey.E:
                                 if (screen is LevelScreen) {
                                     player.Harvest();
+                                    Render();
                                 }
                                 break;
                             default:
