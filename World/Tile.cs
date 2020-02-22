@@ -69,7 +69,7 @@ namespace BasicConsoleGame.World {
         public static ItemEntry GetHarvestItem(Tile tile) {
             switch (tile) {
                 case Tile.SHRUB:
-                    return new ItemEntry(ItemType.Boat, 1);
+                    return new ItemEntry(ItemType.Wood, 1);
                 default:
                     return null;
             }

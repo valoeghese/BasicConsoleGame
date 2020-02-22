@@ -15,5 +15,6 @@
         public readonly string name;
 
         public static readonly ItemType Boat = new BoatItem(0);
+        public static readonly ItemType Wood = new ItemType(1, 128, "wood");
     }
 }
