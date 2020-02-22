@@ -12,6 +12,7 @@ namespace BasicConsoleGame.Player {
             this.y = spawnPos.y;
             this.camera = new Camera(level, x, y);
             this.inventory = new Inventory(10);
+            this.inventory.SetSelectedSlot(0);
         }
 
         public void Move(int x, int y) {
@@ -44,6 +45,14 @@ namespace BasicConsoleGame.Player {
                 default:
                     return new Vec2(x - 1, y);
             }
+        }
+
+        public void SelectedSlotUp() {
+            this.inventory.SetSelectedSlot(++this.selectedSlot);
+        }
+
+        public void SelectedSlotDown() {
+            this.inventory.SetSelectedSlot(--this.selectedSlot);
         }
 
         public bool Harvest() {
@@ -129,6 +138,7 @@ namespace BasicConsoleGame.Player {
         public readonly Inventory inventory;
         private int x;
         private int y;
+        private int selectedSlot = 0;
         private Facing facing;
         internal int blockSlowness = 1;
     }

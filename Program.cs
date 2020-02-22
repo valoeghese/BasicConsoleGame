@@ -27,6 +27,8 @@ namespace BasicConsoleGame {
                             case ConsoleKey.W:
                                 if (screen is LevelScreen) {
                                     player.Move(0, -1);
+                                } else if (screen is InventoryScreen) {
+                                    player.SelectedSlotUp();
                                 }
                                 Render();
                                 break;
@@ -45,6 +47,8 @@ namespace BasicConsoleGame {
                             case ConsoleKey.S:
                                 if (screen is LevelScreen) {
                                     player.Move(0, 1);
+                                } else if (screen is InventoryScreen) {
+                                    player.SelectedSlotDown();
                                 }
                                 Render();
                                 break;

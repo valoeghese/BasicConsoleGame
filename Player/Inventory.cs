@@ -15,6 +15,14 @@ namespace BasicConsoleGame.Player {
             return this.slotCount;
         }
 
+        public int GetSelectedSlot() {
+            return this.selectedSlot;
+        }
+
+        public void SetSelectedSlot(int slot) {
+            this.selectedSlot = slot;
+        }
+
         public void SetItemInSlot(int slot, ItemEntry entry) {
             this.slots[slot] = entry;
         }
@@ -33,6 +41,7 @@ namespace BasicConsoleGame.Player {
 
         private readonly int slotCount;
         private readonly ItemEntry[] slots;
+        private int selectedSlot = -1;
     }
 
     public sealed class ItemEntry {

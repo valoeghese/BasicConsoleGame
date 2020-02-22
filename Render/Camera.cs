@@ -86,7 +86,7 @@ namespace BasicConsoleGame.Render {
             return currentCamera;
         }
 
-        private static ConsoleColor colourCache;
+        internal static ConsoleColor colourCache;
         private static Camera currentCamera = null;
     }
 }

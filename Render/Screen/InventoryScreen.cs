@@ -14,17 +14,32 @@ namespace BasicConsoleGame.Render.Screen {
             Console.SetCursorPosition(0, 0);
             Console.WriteLine(" Inventory");
             Console.WriteLine("========================================");
+            int selectedSlot = this.inventory.GetSelectedSlot();
+
             for (int i = 0; i < inventory.Slots(); ++i) {
                 int y = 2 + (2 * i);
                 ItemEntry entry = this.inventory[i];
                 
                 if (!entry.IsEmpty()) {
-                    Console.SetCursorPosition(0, y);
+                    if (i == selectedSlot) {
+                        Console.SetCursorPosition(0, y);
+                        Console.Write(">");
+                        Console.SetCursorPosition(39, y);
+                        Console.Write("<");
+                    } else {
+                        Console.SetCursorPosition(39, y);
+                        Console.Write(" ");
+                        Console.SetCursorPosition(0, y);
+                        Console.Write(" ");
+                    }
+
                     Console.Write(entry.GetItem().name);
                     Console.SetCursorPosition(35, y);
                     Console.Write(entry.GetCount());
                 }
             }
+
+            Console.ForegroundColor = Camera.colourCache;
         }
 
         public void ClearScreen() {

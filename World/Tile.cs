@@ -24,6 +24,11 @@ namespace BasicConsoleGame.World {
         public static bool CanPlayerWalkOn(bool inBoat, Tile tile) {
             return !IsSolid(tile) && (inBoat || (tile != Tile.WATER));
         }
+
+        public static bool ValidSpawnTile(Tile tile) {
+            return !IsSolid(tile) && tile != Tile.WATER && tile != Tile.SHALLOW_WATER;
+        }
+
         public static void RenderTile(int x, int y, Tile tile, Camera camera) {
             char c = '?'; // character to render
 
